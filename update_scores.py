@@ -9,7 +9,7 @@ import schedule
 from pymongo.collection import Collection
 
 logger = logging.getLogger('user_update')
-logger.setLevel(os.getenv('LOG_LEVEL').upper())
+logger.setLevel(os.getenv('LOG_LEVEL', 'INFO').upper())
 loggers_formatter = logging.Formatter(
     '%(asctime)s | %(levelname)s | %(process)d | %(name)s | %(funcName)s | %(message)s',
     datefmt='%d/%m/%Y %I:%M:%S')
@@ -97,7 +97,7 @@ def insert_scores_routine(osu_api: OsuApi, scores_collection: Collection):
 
 
 def initialize_db():
-    client = pymongo.mongo_client.MongoClient(os.environ["MONGODB_URL"])
+    client = pymongo.mongo_client.MongoClient(os.getenv("MONGODB_URL"))
     scores_collection: Collection = client.database.scores
     scores_collection.create_index([("pp", pymongo.DESCENDING)])
     scores_collection.create_index([("pp", pymongo.ASCENDING)])
