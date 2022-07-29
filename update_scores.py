@@ -100,12 +100,14 @@ def initialize_db():
     client = pymongo.mongo_client.MongoClient(os.environ["MONGODB_URL"])
     scores_collection: Collection = client.database.scores
     scores_collection.create_index([("pp", pymongo.DESCENDING)])
+    scores_collection.create_index([("pp", pymongo.ASCENDING)])
     scores_collection.create_index([("score", pymongo.DESCENDING)])
+    scores_collection.create_index([("score", pymongo.ASCENDING)])
+    scores_collection.create_index([("mods", pymongo.ASCENDING)])
     scores_collection.create_index([("mods", pymongo.DESCENDING)])
     scores_collection.create_index([("beatmap.$**", 1)])
     scores_collection.create_index([("beatmapset.$**", 1)])
     scores_collection.create_index([("user.$**", 1)])
-
     return scores_collection
 
 
