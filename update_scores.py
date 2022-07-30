@@ -75,7 +75,7 @@ class OsuApi:
 
 def insert_scores_routine(osu_api: OsuApi, scores_collection: Collection):
     logger.info(f'Started insert_scores_routine()!')
-    for page_num in range(1, 11):
+    for page_num in range(1, 21):
         top_players = osu_api.get_top_std_players(page=page_num)
         logger.info(f'Looking at page {page_num} of performance rankings.')
 
