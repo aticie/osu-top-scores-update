@@ -98,7 +98,7 @@ def insert_scores_routine(osu_api: OsuApi, scores_collection: Collection):
 
 def initialize_db():
     client = pymongo.mongo_client.MongoClient(os.getenv("MONGO_URL"))
-    scores_collection: Collection = client.database.scores
+    scores_collection: Collection = client.TopOneK.Scores
     scores_collection.create_index([("pp", pymongo.DESCENDING)])
     scores_collection.create_index([("pp", pymongo.ASCENDING)])
     scores_collection.create_index([("score", pymongo.DESCENDING)])
