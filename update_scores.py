@@ -98,7 +98,7 @@ def insert_scores_routine(osu_api: OsuApi, scores_collection: Collection):
 
 def initialize_db():
     client = pymongo.mongo_client.MongoClient(os.getenv("MONGO_URL"))
-    scores_collection: Collection = client.TopOneK.Scores
+    scores_collection: Collection = client.Farmer.Scores
     scores_collection.create_index([("pp", pymongo.DESCENDING)])
     scores_collection.create_index([("pp", pymongo.ASCENDING)])
     scores_collection.create_index([("score", pymongo.DESCENDING)])
@@ -117,8 +117,3 @@ if __name__ == '__main__':
     collection = initialize_db()
 
     insert_scores_routine(api, collection)
-    schedule.every().day.at("12:00").do(insert_scores_routine, api, collection)
-    while True:
-        schedule.run_pending()
-        logger.info(f'Waiting...')
-        time.sleep(600)
